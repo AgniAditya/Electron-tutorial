@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/electron/main.js",
   "scripts": {
-    "dev:electron": "electron .",
+    "dev:electron": "cross-env NODE_ENV=development electron .",
     "dev:react": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -24,6 +24,7 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
+    "cross-env": "^10.0.0",
     "electron": "^38.1.0",
     "electron-builder": "^26.0.12",
     "eslint": "^9.33.0",
