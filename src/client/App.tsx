@@ -6,6 +6,23 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+  //@ts-ignore
+  window.electron.llmModels((models) => {
+    const listOfModels : string[] = []
+    
+    for(const model of models.data){
+      listOfModels.push(model.name)
+    }
+
+    console.log('Received LLM Models:', listOfModels);
+  });
+
+  //@ts-ignore
+  window.electron.allSoftware((softwares) => {
+    console.log('Received All Softwares:', softwares);
+  });
+
+
   return (
     <>
       <div>

@@ -1,10 +1,13 @@
 const electron = require('electron')
 
 electron.contextBridge.exposeInMainWorld('electron',{
-    llmModels: (callback : any) => {
-        electron.ipcRenderer.on('llmModels',(_ : any, llm_mdoels : any) => {
-            callback(llm_mdoels)
-        })
+    llmModels: async (callback : any) => {
+        try {
+            const llmModelsData = await electron.ipcRenderer.invoke('llmModels');
+            callback(llmModelsData);  // Pass the received data to the callback
+        } catch (error) {
+            console.error("Error fetching llmModels", error);
+        }
     },
     cuurentSoftware: (callback : any) => {
         electron.ipcRenderer.on('currentSoftware',(_ : any, current_Software : any) => {
@@ -12,9 +15,12 @@ electron.contextBridge.exposeInMainWorld('electron',{
         })
     }
     ,
-    allSoftware: (callback : any) => {
-        electron.ipcRenderer.on('allSoftware',(_ : any, all_Software : any) => {
-            callback(all_Software)
-        })
+    allSoftware: async (callback : any) => {
+        try {
+            const allSoftwareData = electron.ipcRenderer.invoke('allSoftware')
+            callback(allSoftwareData)
+        } catch (error) {
+            console.error("Error fetching all software", error);
+        }
     }
 })

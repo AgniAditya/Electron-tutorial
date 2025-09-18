@@ -1,6 +1,6 @@
 import {app , BrowserWindow, ipcMain} from 'electron';
 import path from 'path'
-import { isDev, LLMmodels } from './utils.js';
+import { isDev, getAllLLMModels , getAllSoftwares} from './utils.js';
 import { getPreloadPath } from './pathResolver.js';
 
 app.on('ready', () => {
@@ -17,6 +17,22 @@ app.on('ready', () => {
     }
 
     ipcMain.handle('llmModels',() => {
-        return LLMmodels()
+        try {
+            const models = getAllLLMModels();
+            return models;
+        } catch (error) {
+            console.error("Error handling llmModels request:", error);
+            throw error;
+        }
+    })
+
+    ipcMain.handle('allSoftware',() => {
+        try {
+            const softwares = getAllSoftwares();
+            return softwares;
+        } catch (error) {
+            console.error("Error handling softwares data request:", error);
+            throw error;
+        }
     })
 })
